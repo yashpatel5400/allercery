@@ -16,9 +16,9 @@ def process_image(img_name):
     dst = copy.deepcopy(img)
     rois_h = divideHW(dst, 1, s.THRESHOLD1, s.THRESHOLD2)
 
-    print("Analyzed rectangles! Found: {}".format(len(rois_h)))
     rect_count = 0
     if rois_h is not None:
+        print("Analyzed rectangles! Found: {}".format(len(rois_h)))
         for i in range(len(rois_h)):
             if s.VERTICAL_DIVIDE:
                 roi_h  = dst[
@@ -34,8 +34,14 @@ def process_image(img_name):
 
                         x, y, width, height = rois_w[j]
                         cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
-            x, y, width, height = rois_h[i]
-            cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
+
+                        if width > s.DIM_THRESHOLD and height > s.DIM_THRESHOLD:
+                            rect_count += 1
+                            cv2.imwrite("{}_{}_{}.jpg".format(s.OUTPUT_NAME, img_name, rect_count), 
+                                dst[y:(y + height), x:(x + width), :])
+
+            # x, y, width, height = rois_h[i]
+            # cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
             print("Drew rectangle {}".format(i))
     cv2.imwrite("{}_{}".format(s.OUTPUT_NAME, img_name), dst)
 
@@ -91,4 +97,4 @@ def main(img_name):
     process_image(img_name)
 
 if __name__ == "__main__":
-    main("test.jpg")
+    main("cereal.jpg")
