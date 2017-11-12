@@ -4,6 +4,8 @@ import processing.extraction.is_legal as legal
 import processing.extraction.settings as s
 
 def check_image(filename,allergies):
+    
+    allergies = [allergy.lower() for allergy in allergies]
     ingred_dict = ingred.make_table(s.DB)
     
     annotations = extract.get_web(filename)
