@@ -30,7 +30,7 @@ def upload_file():
     is_legal = True
     for i, rect_coord in enumerate(rect_coords):
         lo_coord, hi_coord = rect_coord
-        is_legal = check_image("{}{}.jpg".format(result_dir, i), allergies)
+        is_legal = check_image("{}{}.jpg".format(result_dir, i+1), allergies)
 
         if is_legal: color = (0,255,0)
         else: color = (0,0,255)

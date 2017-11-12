@@ -75,7 +75,7 @@ def divideHW(img, dim, threshold1, threshold2):
     """
     rows, cols, colors = img.shape # separated for sake of clarity
     gray_img    = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    reduced_img = cv2.reduce(gray_img, dim, cv2.REDUCE_AVG)
+    reduced_img = cv2.reduce(gray_img, dim, 1) #cv2.REDUCE_AVG)
     canny_img   = cv2.Canny(reduced_img, threshold1, threshold2)
     pts = cv2.findNonZero(canny_img)
 
