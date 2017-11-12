@@ -11,7 +11,7 @@ import copy
 import os
 
 import settings as s
-from hed import segment_edges
+# from hed import segment_edges
 
 def partition_image(img_name):
     img_root = img_name.split(".")[0]
@@ -46,14 +46,19 @@ def partition_image(img_name):
                         rois_w[j][1] += rois_h[i][1]
 
                         x, y, width, height = rois_w[j]
-                        cv2.rectangle(dst, (x - delta_x, y - delta_y), 
-                            (x + width - delta_x, y + height - delta_y), (0, 255, 0), 2)
+                        cv2.rectangle(dst, (x , y), 
+                            (x + width , y + height ), (0, 255, 0), 2)
 
                         if width > s.DIM_THRESHOLD and height > s.DIM_THRESHOLD:
                             rect_count += 1
-                            cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
-                                orig[(y - delta_y):(y + height - delta_y), 
-                                     (x - delta_x):(x + width - delta_x), :])
+
+                            if y > delta_y and x > delta_x:
+                                cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
+                                    orig[(y - delta_y):(y + height - delta_y), 
+                                         (x - delta_x):(x + width - delta_x), :])
+                            else:
+                                cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
+                                    orig[y:(y + height), x:(x + width), :])
 
             # x, y, width, height = rois_h[i]
             # cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
@@ -109,7 +114,7 @@ def partition(img_name):
     """
     name of the iamge to be analyzed
     """
-    segment_edges([img_name])
+    # segment_edges([img_name])
     partition_image(img_name)
 
 if __name__ == "__main__":
