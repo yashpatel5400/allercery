@@ -31,6 +31,7 @@ def upload_file():
 
     print("Successfully partitioned image! Drawing image...")
     is_legal = True
+
     for i, rect_coord in enumerate(rect_coords):
         print("Started drawing rectangle: {}".format(i))
         lo_coord, hi_coord = rect_coord
