@@ -41,14 +41,26 @@ def report(annotations):
             print('Description: {}'.format(entity.description))
 
 # given a file path, returns logos and web descriptions (if any)
-def get_logos_web(filename):
+def get_web(filename):
     
     vision_client = vision.Client()
     
     with io.open(filename, 'rb') as image_file:
         content = image_file.read()
         image = vision_client.image(content=content)
-        
+
     web = image.detect_web()
 
     return(web)
+
+def get_logos(filename):
+
+    vision_client = vision.Client()
+    
+    with io.open(filename, 'rb') as image_file:
+        content = image_file.read()
+        image = vision_client.image(content=content)
+
+    logos = image.detect_logos()    
+
+    return(logos)
