@@ -45,7 +45,7 @@ def get_logos_web(filename):
     
     vision_client = vision.Client()
     
-    with io.open(file_name, 'rb') as image_file:
+    with io.open(filename, 'rb') as image_file:
         content = image_file.read()
         image = vision_client.image(content=content)
         
