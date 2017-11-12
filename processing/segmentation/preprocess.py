@@ -5,7 +5,7 @@ __description__ = Preprocessing code used for set of for segmentation.
 Mostly an assortment of miscellaneous image cleanup and transformation methods
 """
 
-import settings as s
+import processing.segmentation.settings as s
 
 import urllib
 import urllib2
