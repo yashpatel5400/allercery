@@ -15,7 +15,8 @@ def is_legal(food, allergies, ingred_dict):
     if food not in ingred_dict:
         return(0)
     ingredients = ingred_dict[food]
-    if any(allergies) in ingredients:
-        return(-1)
-    else:
-        return(1)
+    for a in allergies:
+        if a in ingredients:
+            return(-1)
+
+    return(1)
