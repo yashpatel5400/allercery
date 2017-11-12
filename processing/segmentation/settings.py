@@ -13,7 +13,7 @@ TEST = 'test/'
 
 # -------------------- Input Directory Global Variables ---------------------#
 # raw images and matrix files
-INPUT_DIR = './input/'
+INPUT_DIR = './processing/segmentation/input/'
 
 # -------------------- Pre-trained Model Variables ---------------------------#
 # website where the pre-trained model can be downloaded
@@ -26,16 +26,16 @@ MODEL_META = "deploy.prototxt"
 MODEL_FILENAME = "hed_pretrained_bsds.caffemodel"
 
 # directory for models cache
-MODEL_CACHE = "./cache/"
+MODEL_CACHE = "./processing/segmentation/cache/"
 
 # -------------------- Output Directory Edge Imgs ---------------------------  #
 # directory for edge output images
-EDGE_OUTPUT_DIR = "./edges/"
+EDGE_OUTPUT_DIR = "./processing/segmentation/edges/"
 
 # ============================  PARTIIONS ===================================  #
 # -------------------- Output Directory Edge Imgs ---------------------------  #
 # directory for final output images
-PARTITION_OUTPUT_DIR = "./results/"
+PARTITION_OUTPUT_DIR = "./processing/segmentation/results/"
 
 # --------------------------- Overall Window -------------------------------- #
 WINDOW_NAME = "result"
