@@ -16,12 +16,8 @@ import processing.segmentation.settings as s
 def partition_image(img_name):
     img_root = img_name.split(".")[0]
 
-    orig = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
-    dst  = cv2.imread("{}{}.png".format(s.EDGE_OUTPUT_DIR, img_root), cv2.IMREAD_COLOR)
-
-    orig_x, orig_y, _ = orig.shape
-    dest_x, dest_y, _ = dst.shape
-    delta_x, delta_y = (dest_x - orig_x) // 2, (dest_y - orig_y) // 2
+    # orig = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
+    dst  = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
 
     rois_h = divideHW(dst, 1, s.THRESHOLD1, s.THRESHOLD2)
     rect_count = 0
@@ -50,17 +46,9 @@ def partition_image(img_name):
                         if width > s.DIM_THRESHOLD and height > s.DIM_THRESHOLD:
                             rect_count += 1
 
-                            if y > delta_y and x > delta_x:
-                                rect_coords.append([(x - delta_x, y - delta_y), 
-                                    (x + width - delta_x, y + height - delta_y)])
-                                cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
-                                    orig[(y - delta_y):(y + height - delta_y), 
-                                         (x - delta_x):(x + width - delta_x), :])
-
-                            else:
-                                rect_coords.append([(x, y), (x + width, y + height)])
-                                cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
-                                    orig[y:(y + height), x:(x + width), :])
+                            rect_coords.append([(x, y), (x + width, y + height)])
+                            cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
+                                dst[y:(y + height), x:(x + width), :])
             print("Partitioned rectangle {}".format(i))
     return rect_coords
 

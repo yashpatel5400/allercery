@@ -10,6 +10,9 @@ def check_image(filename,allergies):
     
     annotations = extract.get_web(filename)
     logos = extract.get_logos(filename)
+    print("Found: {}; {}".format([x.description for x in annotations], 
+        [x.description for x in logos]))
+
     legality = []
     if len(logos) > 0:
         for logo in logos:
