@@ -1,10 +1,10 @@
-import extract
-import map_ingredients as ingred
-import is_legal as legal
+import processing.extraction.extract as extract
+import processing.extraction.map_ingredients as ingred
+import processing.extraction.is_legal as legal
+import processing.extraction.settings as s
 
 def check_image(filename,allergies):
-    database = '/Users/jeffreyregister/hackprinceton/allercery/processing/extraction/cereal_ingredients.csv'
-    ingred_dict = ingred.make_table(database)
+    ingred_dict = ingred.make_table(s.DB)
     
     annotations = extract.get_web(filename)
     logos = extract.get_logos(filename)
