@@ -97,4 +97,4 @@ def main(img_name):
     process_image(img_name)
 
 if __name__ == "__main__":
-    main("cereal.jpg")
+    main("cereal2.jpg")
