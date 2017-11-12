@@ -15,7 +15,7 @@ import os
 import cv2
 from PIL import Image
 
-def preprocess_gif(gif, input_dir=s.INPUT_DIR, output_dir=s.OUTPUT_DIR):
+def preprocess_gif(gif, input_dir=s.INPUT_DIR, output_dir=s.EDGE_OUTPUT_DIR):
     """
     Breaks a GIF file into constituent frame images and saves them in the
     specified directory. If no directory specified, saves to default input/frames.
