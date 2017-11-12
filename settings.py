@@ -6,6 +6,7 @@ __description__ = Global settings file
 
 # --------------------- Overall Window ------------------------ #
 WINDOW_NAME = "result"
+OUTPUT_NAME = "result.jpg"
 
 # --------------------- Overall Window ------------------------ #
 SCALE = 4
