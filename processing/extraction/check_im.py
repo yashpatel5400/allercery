@@ -3,7 +3,7 @@ import map_ingredients as ingred
 import is_legal as legal
 
 def check_image(filename,allergies):
-    database = '/Users/jeffreyregister/hackprinceton/allercery/cereal_ingredients.csv'
+    database = '/Users/jeffreyregister/hackprinceton/allercery/processing/extraction/cereal_ingredients.csv'
     ingred_dict = ingred.make_table(database)
     
     annotations = extract.get_web(filename)
