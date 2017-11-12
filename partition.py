@@ -16,13 +16,16 @@ def process_image(img_name):
     dst = copy.deepcopy(img)
     rois_h = divideHW(dst, 1, s.THRESHOLD1, s.THRESHOLD2)
 
+    print("Analyzed rectangles! Found: {}".format(len(rois_h)))
+    rect_count = 0
     if rois_h is not None:
         for i in range(len(rois_h)):
             if s.VERTICAL_DIVIDE:
-                print(dst.shape)
-                roi_h = dst[rois_h[i][1]:rois_h[i][3], rois_h[i][0]:rois_h[i][2], :]
-                print(roi_h.shape)
-
+                roi_h  = dst[
+                            rois_h[i][1]:(rois_h[i][1] + rois_h[i][3]), 
+                            rois_h[i][0]:(rois_h[i][0] + rois_h[i][2]), 
+                            :
+                        ]
                 rois_w = divideHW(roi_h, 0, s.THRESHOLD1, s.THRESHOLD2)
 
                 if rois_w is not None:
@@ -30,21 +33,11 @@ def process_image(img_name):
                         rois_w[j][1] += rois_h[i][1]
 
                         x, y, width, height = rois_w[j]
-                        cv2.rectangle(dst, (x, x + width), (y, y + height), (0, 255, 0), 1)
-                        # rois_w[j].x = rois_w[j].x * s.SCALE
-                        # rois_w[j].y = rois_w[j].y * s.SCALE
-                        # rois_w[j].width = rois_w[j].width * s.SCALE
-                        # rois_w[j].height = rois_w[j].height * s.SCALE
-                        # cv2.rectangle(dst, rois_w[j], (0, 255, 0), 3)
+                        cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
             x, y, width, height = rois_h[i]
-            cv2.rectangle(dst, (x, x + width), (y, y + height), (0, 255, 0), 2)
-            # rois_h[i].x = rois_h[i].x * s.SCALE
-            # rois_h[i].y = rois_h[i].y * s.SCALE
-            # rois_h[i].width = rois_h[i].width * s.SCALE
-            # rois_h[i].height = rois_h[i].height * s.SCALE
-            # cv2.rectangle(dst, rois_h[i], (0, 0, 255), 3)
-
-    cv2.imwrite(s.OUTPUT_NAME, dst)
+            cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
+            print("Drew rectangle {}".format(i))
+    cv2.imwrite("{}_{}".format(s.OUTPUT_NAME, img_name), dst)
 
 def divideHW(img, dim, threshold1, threshold2):
     """
