@@ -49,7 +49,6 @@ def get_logos_web(filename):
         content = image_file.read()
         image = vision_client.image(content=content)
         
-    logos = image.detect_logos()
     web = image.detect_web()
 
-    return((logos,web))
+    return(web)
