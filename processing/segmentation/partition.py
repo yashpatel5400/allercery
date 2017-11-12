@@ -17,7 +17,7 @@ def partition_image(img_name):
     img_root = img_name.split(".")[0]
 
     orig = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
-    dst = cv2.imread("{}{}.png".format(s.EDGE_OUTPUT_DIR, img_root), cv2.IMREAD_COLOR)
+    dst  = cv2.imread("{}{}.png".format(s.EDGE_OUTPUT_DIR, img_root), cv2.IMREAD_COLOR)
 
     orig_x, orig_y, _ = orig.shape
     dest_x, dest_y, _ = dst.shape
@@ -30,6 +30,7 @@ def partition_image(img_name):
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
+    rect_coords = []
     if rois_h is not None:
         print("Analyzed rectangles! Found: {}".format(len(rois_h)))
         for i in range(len(rois_h)):
@@ -46,24 +47,22 @@ def partition_image(img_name):
                         rois_w[j][1] += rois_h[i][1]
 
                         x, y, width, height = rois_w[j]
-                        cv2.rectangle(dst, (x , y), 
-                            (x + width , y + height ), (0, 255, 0), 2)
-
                         if width > s.DIM_THRESHOLD and height > s.DIM_THRESHOLD:
                             rect_count += 1
 
                             if y > delta_y and x > delta_x:
+                                rect_coords.append([(x - delta_x, y - delta_y), 
+                                    (x + width - delta_x, y + height - delta_y)])
                                 cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
                                     orig[(y - delta_y):(y + height - delta_y), 
                                          (x - delta_x):(x + width - delta_x), :])
+
                             else:
+                                rect_coords.append([(x, y), (x + width, y + height)])
                                 cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
                                     orig[y:(y + height), x:(x + width), :])
-
-            # x, y, width, height = rois_h[i]
-            # cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
             print("Drew rectangle {}".format(i))
-    cv2.imwrite("{}_{}.jpg".format(s.OUTPUT_NAME, img_root), dst)
+    return rect_coords
 
 def divideHW(img, dim, threshold1, threshold2):
     """
@@ -115,7 +114,7 @@ def partition(img_name):
     name of the iamge to be analyzed
     """
     # segment_edges([img_name])
-    partition_image(img_name)
+    return partition_image(img_name)
 
 if __name__ == "__main__":
     partition("cereal.jpg")
