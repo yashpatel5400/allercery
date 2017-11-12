@@ -61,7 +61,7 @@ def partition_image(img_name):
                                 rect_coords.append([(x, y), (x + width, y + height)])
                                 cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
                                     orig[y:(y + height), x:(x + width), :])
-            print("Drew rectangle {}".format(i))
+            print("Partitioned rectangle {}".format(i))
     return rect_coords
 
 def divideHW(img, dim, threshold1, threshold2):
