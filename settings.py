@@ -14,4 +14,8 @@ VERTICAL_DIVIDE = 1
 
 # thresholds for Canny edge detector
 THRESHOLD1 = 0
-THRESHOLD2 = 225
+THRESHOLD2 = 255
+
+# threshold of how large a "slice" of the image must be to be considered
+# a legal cut
+DIM_THRESHOLD = 10
