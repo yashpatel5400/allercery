@@ -11,7 +11,7 @@ import copy
 import os
 
 import processing.segmentation.settings as s
-from processing.segmentation.hed import segment_edges
+# from processing.segmentation.hed import segment_edges
 
 def partition_image(img_name):
     img_root = img_name.split(".")[0]
@@ -113,7 +113,7 @@ def partition(img_name):
     """
     name of the iamge to be analyzed
     """
-    segment_edges([img_name])
+    # segment_edges([img_name])
     return partition_image(img_name)
 
 if __name__ == "__main__":
