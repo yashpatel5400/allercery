@@ -1,6 +1,6 @@
 import os
 import cv2
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import time
 
 import io
@@ -80,8 +80,8 @@ def upload_file():
         print("Finished drawing rectangle: {}".format(i))
         print("=====================================")
 
-    cv2.imwrite("results/{}".format(file.filename), final)
-    return render_template('index.html')
+    cv2.imwrite("static/{}".format(file.filename), final)
+    return render_template('result.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
