@@ -17,6 +17,7 @@ def is_legal(food, allergies, ingred_dict):
     ingredients = ingred_dict[food]
     for a in allergies:
         if a in ingredients:
+            print("Food contains allergy to: {}".format(a))
             return(-1)
 
     return(1)

@@ -17,7 +17,7 @@ def make_table(database):
         cereal.append(about[0])
         brand.append(about[1])
         ingredients = about[2].strip('"').lower()
-        ingred.append(set(ingredients.split(', ')))
+        ingred.append(ingredients)
 
     ingred_dict = dict(zip(cereal,ingred))
 
