@@ -8,15 +8,28 @@ using OpenCV
 import numpy as np
 import cv2
 import copy
+import os
 
 import settings as s
+from hed import segment_edges
 
-def process_image(img_name):
-    img = cv2.imread(img_name, cv2.IMREAD_COLOR)
-    dst = copy.deepcopy(img)
+def partition_image(img_name):
+    img_root = img_name.split(".")[0]
+
+    orig = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
+    dst = cv2.imread("{}{}.png".format(s.EDGE_OUTPUT_DIR, img_root), cv2.IMREAD_COLOR)
+
+    orig_x, orig_y, _ = orig.shape
+    dest_x, dest_y, _ = dst.shape
+    delta_x, delta_y = (dest_x - orig_x) // 2, (dest_y - orig_y) // 2
+
     rois_h = divideHW(dst, 1, s.THRESHOLD1, s.THRESHOLD2)
-
     rect_count = 0
+
+    dir_name = "{}{}/".format(s.PARTITION_OUTPUT_DIR, img_root)
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
     if rois_h is not None:
         print("Analyzed rectangles! Found: {}".format(len(rois_h)))
         for i in range(len(rois_h)):
@@ -33,17 +46,19 @@ def process_image(img_name):
                         rois_w[j][1] += rois_h[i][1]
 
                         x, y, width, height = rois_w[j]
-                        cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
+                        cv2.rectangle(dst, (x - delta_x, y - delta_y), 
+                            (x + width - delta_x, y + height - delta_y), (0, 255, 0), 2)
 
                         if width > s.DIM_THRESHOLD and height > s.DIM_THRESHOLD:
                             rect_count += 1
-                            cv2.imwrite("{}_{}_{}.jpg".format(s.OUTPUT_NAME, img_name, rect_count), 
-                                dst[y:(y + height), x:(x + width), :])
+                            cv2.imwrite("{}{}.jpg".format(dir_name, rect_count), 
+                                orig[(y - delta_y):(y + height - delta_y), 
+                                     (x - delta_x):(x + width - delta_x), :])
 
             # x, y, width, height = rois_h[i]
             # cv2.rectangle(dst, (x, y), (x + width, y + height), (0, 255, 0), 2)
             print("Drew rectangle {}".format(i))
-    cv2.imwrite("{}_{}".format(s.OUTPUT_NAME, img_name), dst)
+    cv2.imwrite("{}_{}.jpg".format(s.OUTPUT_NAME, img_root), dst)
 
 def divideHW(img, dim, threshold1, threshold2):
     """
@@ -90,11 +105,12 @@ def divideHW(img, dim, threshold1, threshold2):
                 rects.append(rect)
     return rects
 
-def main(img_name):
+def partition(img_name):
     """
     name of the iamge to be analyzed
     """
-    process_image(img_name)
+    segment_edges([img_name])
+    partition_image(img_name)
 
 if __name__ == "__main__":
-    partition("cereal.png")
+    partition("cereal.jpg")
