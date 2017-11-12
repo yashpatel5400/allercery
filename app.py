@@ -1,4 +1,5 @@
 import os
+import cv2
 from flask import Flask, render_template, request
 
 from processing.segmentation.partition import partition
@@ -19,16 +20,22 @@ def upload_file():
     f = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     
     file.save(f)
-    partition(file.filename)
+    rect_coords = partition(file.filename)
 
     root_name = file.filename.split(".")[0]
     result_dir = "processing/segmentation/results/{}/".format(root_name)
     allergies = request.form.get("allergies").split()
 
-    fits_allergy = {}
-    for result in os.listdir(result_dir):
-        fits_allergy[result] = check_image("{}{}".format(result_dir, result), allergies)
-    print(fits_allergy)
+    final = cv2.imread(f, cv2.IMREAD_COLOR)
+    is_legal = True
+    for i, rect_coord in enumerate(rect_coords):
+        lo_coord, hi_coord = rect_coord
+        is_legal = check_image("{}{}.jpg".format(result_dir, i), allergies)
+
+        if is_legal: color = (0,255,0)
+        else: color = (0,0,255)
+        cv2.rectangle(final, lo_coord, hi_coord, color, 2)
+    cv2.imwrite("results/{}".format(file.filename), final)
     return render_template('index.html')
 
 if __name__ == "__main__":
