@@ -30,7 +30,7 @@ def upload_file():
 
     root_name = file.filename.split(".")[0]
     result_dir = "processing/segmentation/results/{}/".format(root_name)
-    allergies = set(request.form.get("allergies").split())
+    allergies = set([allergy.strip() for allergy in request.form.get("allergies").split(",")])
     final = cv2.imread(f, cv2.IMREAD_COLOR)
 
     print("Successfully partitioned image! Drawing {} rectangles...".format(len(rect_coords)))
