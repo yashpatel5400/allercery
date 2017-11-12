@@ -16,7 +16,7 @@ from scipy.misc import imsave
 from PIL import Image
 
 def segment_edges(imgs, cache_dir=s.MODEL_CACHE, 
-    input_dir=s.INPUT_DIR, output_dir=s.OUTPUT_DIR, save_output=True):
+    input_dir=s.INPUT_DIR, output_dir=s.EDGE_OUTPUT_DIR, save_output=True):
     """
     Given a list of images, returns the edge segmentations of the images. They will
     be returned corresponding to the order inputted and can be saved to the default
