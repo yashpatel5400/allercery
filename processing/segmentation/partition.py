@@ -10,12 +10,11 @@ import cv2
 import copy
 import os
 
-import settings as s
-# from hed import segment_edges
+import processing.segmentation.settings as s
+# from processing.segmentation.hed import segment_edges
 
 def partition_image(img_name):
     img_root = img_name.split(".")[0]
-
     orig = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
     dst = cv2.imread("{}{}.png".format(s.EDGE_OUTPUT_DIR, img_root), cv2.IMREAD_COLOR)
 

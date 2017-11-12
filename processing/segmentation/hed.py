@@ -6,8 +6,9 @@ Very special thank you https://github.com/s9xie/hed for the
 pre-trained model and usage code.
 """
 
-import settings as s
-from preprocess import preprocess_gif, download_model, add_padding, remove_padding
+import processing.segmentation.settings as s
+from processing.segmentation.preprocess import preprocess_gif, download_model, \
+                                            add_padding, remove_padding
 
 import os
 import numpy as np
