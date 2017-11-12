@@ -9,12 +9,14 @@ def check_image(filename,allergies):
     annotations = extract.get_web(filename)
     logos = extract.get_logos(filename)
     legality = []
-    if annotations.web_entities:
-        for entity in annotations.web_entities:
-            if entity.score >= 0.5:
-                legality.append(legal.is_legal(entity.description, allergies, ingred_dict))
-    for logo in logos:
-        legality.append(legal.is_legal(logo.description, allergies, ingred_dict))
+    if len(logos) > 0:
+        for logo in logos:
+            legality.append(legal.is_legal(logo.description, allergies, ingred_dict))
+    else:
+        if annotations.web_entities:
+            for entity in annotations.web_entities:
+                if entity.score >= 0.5:
+                    legality.append(legal.is_legal(entity.description, allergies, ingred_dict))
 
     if sum(legality) > 0:
         if -1 in legality:
