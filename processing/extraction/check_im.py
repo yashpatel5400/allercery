@@ -6,7 +6,8 @@ def check_image(filename,allergies):
     database = '/Users/jeffreyregister/hackprinceton/allercery/cereal_ingredients.csv'
     ingred_dict = ingred.make_table(database)
     
-    (annotations,logos) = extract.get_logos_web(filename)
+    annotations = extract.get_web(filename)
+    logos = extract.get_logos(filename)
     legality = []
     if annotations.web_entities:
         for entity in annotations.web_entities:
