@@ -15,6 +15,7 @@ import processing.segmentation.settings as s
 
 def partition_image(img_name):
     img_root = img_name.split(".")[0]
+
     orig = cv2.imread("{}{}".format(s.INPUT_DIR, img_name), cv2.IMREAD_COLOR)
     dst = cv2.imread("{}{}.png".format(s.EDGE_OUTPUT_DIR, img_root), cv2.IMREAD_COLOR)
 
